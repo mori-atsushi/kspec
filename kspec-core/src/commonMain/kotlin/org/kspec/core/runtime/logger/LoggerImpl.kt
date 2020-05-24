@@ -1,9 +1,9 @@
-package org.kspec.core.runtime
+package org.kspec.core.runtime.logger
 
 import org.kspec.core.runtime.model.Block
 import org.kspec.core.runtime.model.ExecutionResult
 
-internal object Logger : Executor.Listener {
+internal class LoggerImpl : Logger {
     override fun onBegin(block: Block) {
         println("start: $block")
     }

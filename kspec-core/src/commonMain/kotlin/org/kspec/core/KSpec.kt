@@ -1,9 +1,7 @@
 package org.kspec.core
 
 import org.kspec.core.dsl.body.GroupBody
-import org.kspec.core.runtime.Collector
-import org.kspec.core.runtime.Executor
-import org.kspec.core.runtime.Logger
+import org.kspec.core.runtime.InstanceContainer
 import org.kspec.core.runtime.model.Name
 import org.kspec.core.runtime.model.StringName
 import org.kspec.core.runtime.model.TypeName
@@ -39,10 +37,14 @@ class KSpec private constructor(
                 body = body
             )
         }
+
+        fun run(vararg items: KSpec) {
+            val runner = InstanceContainer.newRunner()
+            runner.run(items.toList())
+        }
     }
 
     fun run() {
-        val block = Collector.collect(this)
-        Executor.execute(block, Logger)
+        run(this)
     }
 }
