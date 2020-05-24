@@ -6,6 +6,7 @@ import org.kspec.core.runtime.model.Block
 
 internal class CollectorImpl : Collector {
     override fun collect(target: KSpec): Block {
-        return GroupBodyImpl.collect(target.name, target.body)
+        val names = listOf(target.name)
+        return GroupBodyImpl.collect(names, target.body)
     }
 }

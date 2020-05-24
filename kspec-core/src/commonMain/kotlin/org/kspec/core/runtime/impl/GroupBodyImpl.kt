@@ -7,11 +7,11 @@ import org.kspec.core.runtime.model.Name
 import org.kspec.core.runtime.model.StringName
 
 internal class GroupBodyImpl private constructor(
-    private val name: Name
+    private val names: List<Name>
 ) : GroupBody {
     companion object {
-        fun collect(name: Name, body: GroupBody.() -> Unit): Block {
-            val groupBody = GroupBodyImpl(name)
+        fun collect(names: List<Name>, body: GroupBody.() -> Unit): Block {
+            val groupBody = GroupBodyImpl(names)
             body.invoke(groupBody)
             return groupBody.toBlock()
         }
@@ -28,7 +28,7 @@ internal class GroupBodyImpl private constructor(
     }
 
     private fun group(name: Name, body: GroupBody.() -> Unit) {
-        val block = collect(name, body)
+        val block = collect(names + name, body)
         blocks.add(block)
     }
 
@@ -42,13 +42,14 @@ internal class GroupBodyImpl private constructor(
     }
 
     private fun test(name: Name?, body: TestBody.() -> Unit) {
-        val test = Block.Test(name, body)
+        val names = name?.let { names + it } ?: names
+        val test = Block.Test(names, body)
         this.blocks.add(test)
     }
 
     private fun toBlock(): Block.Group {
         return Block.Group(
-            name = name,
+            names = names,
             blocks = blocks
         )
     }

@@ -3,13 +3,15 @@ package org.kspec.core.runtime.model
 import org.kspec.core.dsl.body.TestBody
 
 internal sealed class Block {
+    abstract val names: List<Name>
+
     data class Group(
-        val name: Name,
+        override val names: List<Name>,
         val blocks: List<Block>
     ) : Block()
 
     data class Test(
-        val name: Name?,
+        override val names: List<Name>,
         val body: TestBody.() -> Unit
     ) : Block()
 

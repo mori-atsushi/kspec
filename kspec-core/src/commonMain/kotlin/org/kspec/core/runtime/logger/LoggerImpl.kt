@@ -10,6 +10,7 @@ internal class LoggerImpl : Logger {
     private var isSuccess = true
     private var examplesCount = 0
     private var failureCount = 0
+    private val failures = mutableListOf<Pair<Block.Test, Throwable>>()
 
     override fun onBeginAll() {
     }
@@ -18,10 +19,11 @@ internal class LoggerImpl : Logger {
     }
 
     override fun onFinish(block: Block, result: ExecutionResult) {
-        if (block.isTest) {
+        if (block is Block.Test) {
             examplesCount += 1
             progressLogger.onFinish(result.isSuccess)
-            if (result.isFailure) {
+            if (result is ExecutionResult.Failure) {
+                failures.add(block to result.cause)
                 failureCount += 1
                 isSuccess = false
             }
@@ -30,6 +32,7 @@ internal class LoggerImpl : Logger {
 
     override fun onFinishAll(): Boolean {
         finishLogger.onFinish(
+            failures = failures,
             examplesCount = examplesCount,
             failureCount = failureCount
         )
