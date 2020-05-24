@@ -1,3 +1,19 @@
-group = "org.example"
-version = "1.0-SNAPSHOT"
+buildscript {
+    repositories {
+        jcenter()
+        google()
+        mavenCentral()
+    }
 
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}")
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        google()
+        mavenCentral()
+    }
+}
