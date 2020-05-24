@@ -12,4 +12,7 @@ internal sealed class Block {
         val name: Name?,
         val body: TestBody.() -> Unit
     ) : Block()
+
+    val isGroup get() = this is Group
+    val isTest get() = this is Test
 }
