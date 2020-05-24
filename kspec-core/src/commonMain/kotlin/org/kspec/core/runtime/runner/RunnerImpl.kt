@@ -10,10 +10,12 @@ internal class RunnerImpl(
     private val executor: Executor,
     private val logger: Logger
 ) : Runner {
-    override fun run(list: List<KSpec>) {
+    override fun run(list: List<KSpec>): Boolean {
+        logger.onBeginAll()
         list.forEach {
             val block = collector.collect(it)
             executor.execute(block, logger)
         }
+        return logger.onFinishAll()
     }
 }

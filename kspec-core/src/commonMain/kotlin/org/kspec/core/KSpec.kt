@@ -38,13 +38,13 @@ class KSpec private constructor(
             )
         }
 
-        fun run(vararg items: KSpec) {
+        fun run(vararg items: KSpec): Boolean {
             val runner = InstanceContainer.newRunner()
-            runner.run(items.toList())
+            return runner.run(items.toList())
         }
     }
 
-    fun run() {
-        run(this)
+    fun run(): Boolean {
+        return run(this)
     }
 }
