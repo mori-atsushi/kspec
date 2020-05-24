@@ -1,4 +1,4 @@
-# [WIP] KSpec
+# [WIP] KSpec ![main](https://github.com/Mori-Atsushi/kspec/workflows/Main%20Workflows/badge.svg)
 
 Behaviour Driven Development for Kotlin like [RSpec](https://github.com/rspec/rspec).
 
