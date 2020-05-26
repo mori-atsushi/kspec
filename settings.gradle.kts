@@ -9,4 +9,7 @@ pluginManagement {
 }
 
 rootProject.name = "kspec"
-include("kspec-core")
+include(
+    "kspec-core",
+    "kspec-compiler-plugin"
+)
