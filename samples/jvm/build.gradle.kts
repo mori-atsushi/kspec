@@ -4,4 +4,5 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib"))
+    testImplementation(project(":kspec-core"))
 }
