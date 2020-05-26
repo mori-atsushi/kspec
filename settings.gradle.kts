@@ -12,5 +12,6 @@ rootProject.name = "kspec"
 include(
     "kspec-core",
     "kspec-compiler-plugin",
-    "kspec-gradle-plugin"
+    "kspec-gradle-plugin",
+    "samples:jvm"
 )
