@@ -11,5 +11,6 @@ pluginManagement {
 rootProject.name = "kspec"
 include(
     "kspec-core",
-    "kspec-compiler-plugin"
+    "kspec-compiler-plugin",
+    "kspec-gradle-plugin"
 )
