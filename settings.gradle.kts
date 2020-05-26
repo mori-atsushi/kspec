@@ -1,4 +1,9 @@
 pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven { url = uri("kspec-gradle-plugin/build/repository") }
+    }
+
     resolutionStrategy {
         eachPlugin {
             if (requested.id.id == "org.jetbrains.kotlin.multiplatform") {
@@ -10,8 +15,8 @@ pluginManagement {
 
 rootProject.name = "kspec"
 include(
-    "kspec-core",
-    "kspec-compiler-plugin",
-    "kspec-gradle-plugin",
-    "samples:jvm"
+    ":kspec-core",
+    ":kspec-compiler-plugin",
+    ":kspec-gradle-plugin",
+    ":samples:jvm"
 )

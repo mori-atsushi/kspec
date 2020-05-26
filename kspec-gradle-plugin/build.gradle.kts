@@ -8,10 +8,13 @@ dependencies {
     implementation(kotlin("gradle-plugin-api"))
 }
 
+group = "org.kspec"
+version = "0.0.1"
+
 gradlePlugin {
     plugins {
-        create("KSpecPlugin") {
-            id = "org.kspec"
+        register("kspec-gradle-plugin") {
+            id = "kspec-gradle-plugin"
             implementationClass = "org.kspec.gradle.plugin.KSpecPlugin"
         }
     }
