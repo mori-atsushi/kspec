@@ -17,7 +17,7 @@ subprojects {
             ktlint(ktlintVersion)
                 .editorConfigOverride(
                     mapOf(
-                        "ktlint_code_style" to "android",
+                        "ktlint_code_style" to "intellij_idea",
                         "ij_kotlin_allow_trailing_comma" to true,
                         "ij_kotlin_allow_trailing_comma_on_call_site" to true,
                     ),
