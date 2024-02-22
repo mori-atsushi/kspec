@@ -16,6 +16,7 @@ internal object TestCollector {
 
     private class KSpecGroupScopeImpl : KSpecGroupScope {
         private val items = mutableListOf<ItemDefinition>()
+        private val letDefinitions = mutableMapOf<Let<*>, KSpecTestScope.() -> Any?>()
 
         override fun describe(
             name: String,
@@ -31,18 +32,21 @@ internal object TestCollector {
             items += TestDefinition(body)
         }
 
-        override fun <T> let(name: String): Let<T> {
-            TODO("Not yet implemented")
-        }
+        override fun <T> let(name: String): Let<T> = Let(name)
 
         override fun <T> let(name: String, value: KSpecTestScope.() -> T): Let<T> {
-            TODO("Not yet implemented")
+            val let = Let<T>(name)
+            letDefinitions[let] = value
+            return let
         }
 
         override fun <T> Let<T>.plusAssign(value: KSpecTestScope.() -> T) {
-            TODO("Not yet implemented")
+            letDefinitions[this] = value
         }
 
-        fun asGroupDefinition(): GroupDefinition = GroupDefinition(items.toList())
+        fun asGroupDefinition(): GroupDefinition = GroupDefinition(
+            items.toList(),
+            letDefinitions.toMap(),
+        )
     }
 }
