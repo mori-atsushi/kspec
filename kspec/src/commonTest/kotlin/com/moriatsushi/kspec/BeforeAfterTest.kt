@@ -27,8 +27,8 @@ class BeforeAfterTest {
                     after { afterCount++ }
 
                     it("test1") {}
-                    it("test2") { }
-                    it("test3") { }
+                    it("test2") {}
+                    it("test3") {}
                 }
                 assertEquals(3, beforeCount)
                 assertEquals(3, afterCount)
