@@ -2,6 +2,7 @@ package com.moriatsushi.kspec.collector
 
 import com.moriatsushi.kspec.KSpecGroupScope
 import com.moriatsushi.kspec.KSpecTestScope
+import com.moriatsushi.kspec.Let
 import com.moriatsushi.kspec.model.GroupDefinition
 import com.moriatsushi.kspec.model.ItemDefinition
 import com.moriatsushi.kspec.model.TestDefinition
@@ -28,6 +29,18 @@ internal object TestCollector {
             body: KSpecTestScope.() -> Unit,
         ) {
             items += TestDefinition(body)
+        }
+
+        override fun <T> let(name: String): Let<T> {
+            TODO("Not yet implemented")
+        }
+
+        override fun <T> let(name: String, value: KSpecTestScope.() -> T): Let<T> {
+            TODO("Not yet implemented")
+        }
+
+        override fun <T> Let<T>.plusAssign(value: KSpecTestScope.() -> T) {
+            TODO("Not yet implemented")
         }
 
         fun asGroupDefinition(): GroupDefinition = GroupDefinition(items.toList())

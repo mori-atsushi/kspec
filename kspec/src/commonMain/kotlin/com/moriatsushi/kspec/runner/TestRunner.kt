@@ -1,6 +1,7 @@
 package com.moriatsushi.kspec.runner
 
 import com.moriatsushi.kspec.KSpecTestScope
+import com.moriatsushi.kspec.Let
 import com.moriatsushi.kspec.model.GroupDefinition
 import com.moriatsushi.kspec.model.TestDefinition
 
@@ -18,5 +19,9 @@ internal object TestRunner {
         test.body(KSpecTestScopeImpl)
     }
 
-    private object KSpecTestScopeImpl : KSpecTestScope
+    private object KSpecTestScopeImpl : KSpecTestScope {
+        override fun <T> Let<T>.invoke(): T {
+            TODO("Not yet implemented")
+        }
+    }
 }
