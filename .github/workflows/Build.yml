@@ -79,6 +79,12 @@ jobs:
           gradle-home-cache-cleanup: true
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}
 
+      - name: Cache Kotlin/Native
+        uses: actions/cache@v3
+        with:
+          key: ${{ runner.os }}-kotlin-1.9.22
+          path: ~/.konan
+
       - name: Run local tests
         run: |
           ./gradlew iosX64Test iosSimulatorArm64Test \
