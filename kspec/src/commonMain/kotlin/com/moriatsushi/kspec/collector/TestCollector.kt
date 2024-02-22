@@ -25,6 +25,14 @@ internal object TestCollector {
             items += collect(body)
         }
 
+        override fun after(body: KSpecTestScope.() -> Unit) {
+            TODO("Not yet implemented")
+        }
+
+        override fun before(body: KSpecTestScope.() -> Unit) {
+            TODO("Not yet implemented")
+        }
+
         override fun it(
             name: String,
             body: KSpecTestScope.() -> Unit,
