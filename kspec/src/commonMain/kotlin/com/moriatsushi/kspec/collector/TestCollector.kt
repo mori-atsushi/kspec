@@ -2,6 +2,7 @@ package com.moriatsushi.kspec.collector
 
 import com.moriatsushi.kspec.KSpecGroupScope
 import com.moriatsushi.kspec.KSpecTestScope
+import com.moriatsushi.kspec.Let
 import com.moriatsushi.kspec.model.GroupDefinition
 import com.moriatsushi.kspec.model.ItemDefinition
 import com.moriatsushi.kspec.model.TestDefinition
@@ -15,6 +16,7 @@ internal object TestCollector {
 
     private class KSpecGroupScopeImpl : KSpecGroupScope {
         private val items = mutableListOf<ItemDefinition>()
+        private val letDefinitions = mutableMapOf<Let<*>, KSpecTestScope.() -> Any?>()
 
         override fun describe(
             name: String,
@@ -30,6 +32,21 @@ internal object TestCollector {
             items += TestDefinition(body)
         }
 
-        fun asGroupDefinition(): GroupDefinition = GroupDefinition(items.toList())
+        override fun <T> let(name: String): Let<T> = Let(name)
+
+        override fun <T> let(name: String, value: KSpecTestScope.() -> T): Let<T> {
+            val let = Let<T>(name)
+            letDefinitions[let] = value
+            return let
+        }
+
+        override fun <T> Let<T>.plusAssign(value: KSpecTestScope.() -> T) {
+            letDefinitions[this] = value
+        }
+
+        fun asGroupDefinition(): GroupDefinition = GroupDefinition(
+            items.toList(),
+            letDefinitions.toMap(),
+        )
     }
 }
