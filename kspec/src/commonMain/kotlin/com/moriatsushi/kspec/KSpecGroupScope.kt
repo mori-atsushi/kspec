@@ -12,6 +12,16 @@ interface KSpecGroupScope {
         body: KSpecGroupScope.() -> Unit,
     ) = describe(name, body)
 
+    /**
+     * Runs the given [body] before each test in this group.
+     */
+    fun before(body: KSpecTestScope.() -> Unit)
+
+    /**
+     * Runs the given [body] after each test in this group.
+     */
+    fun after(body: KSpecTestScope.() -> Unit)
+
     fun it(
         name: String,
         body: KSpecTestScope.() -> Unit,

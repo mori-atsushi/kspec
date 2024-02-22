@@ -9,11 +9,15 @@ import com.moriatsushi.kspec.model.TestDefinition
 
 internal object TestRunner {
     fun run(group: GroupDefinition) {
-        run(group, RSpecContext())
+        run(group, RSpecContext.Empty)
     }
 
     private fun run(group: GroupDefinition, context: RSpecContext) {
-        val newContext = context + RSpecContext(group.letDefinitions)
+        val newContext = context + RSpecContext(
+            beforeDefinitions = group.beforeDefinitions,
+            afterDefinitions = group.afterDefinitions,
+            letDefinitions = group.letDefinitions,
+        )
         for (item in group.items) {
             when (item) {
                 is GroupDefinition -> run(item, newContext)
@@ -23,7 +27,13 @@ internal object TestRunner {
     }
 
     private fun runTest(test: TestDefinition, context: RSpecContext) {
+        for (before in context.beforeDefinitions) {
+            before(KSpecTestScopeImpl(context))
+        }
         test.body(KSpecTestScopeImpl(context))
+        for (after in context.afterDefinitions) {
+            after(KSpecTestScopeImpl(context))
+        }
     }
 
     private class KSpecTestScopeImpl(
@@ -34,7 +44,7 @@ internal object TestRunner {
         override fun <T> Let<T>.invoke(): T {
             val scope = this@KSpecTestScopeImpl
             val holder = letValues.getOrPut(this) {
-                val definition = context.findLetDefinition(this)
+                val definition = context.letDefinitions[this]
                     ?: error("The value of $this is not specified")
                 NullableHolder(definition.invoke(scope))
             }

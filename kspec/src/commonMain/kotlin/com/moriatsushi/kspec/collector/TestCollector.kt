@@ -16,6 +16,8 @@ internal object TestCollector {
 
     private class KSpecGroupScopeImpl : KSpecGroupScope {
         private val items = mutableListOf<ItemDefinition>()
+        private val beforeDefinitions = mutableListOf<KSpecTestScope.() -> Unit>()
+        private val afterDefinitions = mutableListOf<KSpecTestScope.() -> Unit>()
         private val letDefinitions = mutableMapOf<Let<*>, KSpecTestScope.() -> Any?>()
 
         override fun describe(
@@ -23,6 +25,14 @@ internal object TestCollector {
             body: KSpecGroupScope.() -> Unit,
         ) {
             items += collect(body)
+        }
+
+        override fun before(body: KSpecTestScope.() -> Unit) {
+            beforeDefinitions += body
+        }
+
+        override fun after(body: KSpecTestScope.() -> Unit) {
+            afterDefinitions += body
         }
 
         override fun it(
@@ -46,6 +56,8 @@ internal object TestCollector {
 
         fun asGroupDefinition(): GroupDefinition = GroupDefinition(
             items.toList(),
+            beforeDefinitions.toList(),
+            afterDefinitions.toList(),
             letDefinitions.toMap(),
         )
     }
