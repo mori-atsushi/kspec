@@ -27,6 +27,16 @@ interface KSpecGroupScope {
         body: KSpecTestScope.() -> Unit,
     )
 
+    fun example(
+        name: String,
+        body: KSpecTestScope.() -> Unit,
+    ) = it(name, body)
+
+    fun specify(
+        name: String,
+        body: KSpecTestScope.() -> Unit,
+    ) = it(name, body)
+
     /**
      * Creates a [Let] without an initial value.
      */
